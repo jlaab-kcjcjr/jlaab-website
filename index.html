@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="JLAAB Dev Studio builds websites and custom business systems for businesses in Albay and the Bicol Region.">
+  <title>JLAAB Dev Studio | Websites and Business Systems in Albay</title>
+
+  <!-- Apply saved theme before the page draws, to avoid a flash -->
+  <script>
+    try {
+      const saved = localStorage.getItem("jlaab-theme");
+      if (saved) document.documentElement.setAttribute("data-theme", saved);
+    } catch (e) {}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="JLAAB Dev Studio home">
+        <!-- LOGO: replace this span with your logo when it's ready:
+             <img src="assets/logo.png" alt="JLAAB Dev Studio" class="brand-logo"> -->
+        <span class="logo-slot" aria-hidden="true">Logo</span>
+        <span class="brand-name">JLAAB <span class="brand-sub">Dev Studio</span></span>
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Main">
+        <a href="#services">Services</a>
+        <a href="#process">How we work</a>
+        <a href="#work">Work</a>
+        <a href="#team">Team</a>
+        <a href="#contact" class="btn btn-primary nav-cta">Message us</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Switch to dark theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M21 14.5A8.5 8.5 0 0 1 9.5 3a8.5 8.5 0 1 0 11.5 11.5Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg>
+        </button>
+        <button class="icon-btn menu-btn" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1>Less paperwork.<br>More business.</h1>
+          <p class="hero-lead">
+            We're five Bicolano developers building websites and custom systems
+            for resorts, stores, schools, and clinics across Albay and Bicol.
+          </p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary">Tell us about your business</a>
+            <a href="#services" class="btn btn-ghost">See what we build</a>
+          </div>
+          <p class="hero-note">Free consultation. Quotation within 2–3 days.</p>
+        </div>
+
+        <!-- Interactive sample: visitor picks a business type -->
+        <div class="demo">
+          <div class="demo-tabs" role="tablist" aria-label="Choose a business type">
+            <button class="demo-tab is-active" role="tab" aria-selected="true" data-biz="resort">Resort</button>
+            <button class="demo-tab" role="tab" aria-selected="false" data-biz="store">Store</button>
+            <button class="demo-tab" role="tab" aria-selected="false" data-biz="school">School</button>
+            <button class="demo-tab" role="tab" aria-selected="false" data-biz="clinic">Clinic</button>
+          </div>
+
+          <div class="demo-window" id="demoWindow" aria-live="polite">
+            <div class="demo-bar">
+              <span class="demo-title" id="demoTitle">Cottage reservations</span>
+              <span class="demo-badge">Sample system</span>
+            </div>
+            <div class="demo-stats" id="demoStats"></div>
+            <ul class="demo-list" id="demoList"></ul>
+          </div>
+          <p class="demo-caption">Tap a business type to see the kind of system we can build for you.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROBLEMS ================= -->
+    <section class="section problems">
+      <div class="container">
+        <h2>Sound familiar?</h2>
+        <div class="problem-grid">
+          <div class="problem">
+            <p class="problem-pain">Two families booked the same cottage because reservations live in a notebook.</p>
+            <p class="problem-fix">A booking system that blocks taken dates and records GCash deposits.</p>
+          </div>
+          <div class="problem">
+            <p class="problem-pain">You count stock by hand every night and still run out of best-sellers.</p>
+            <p class="problem-fix">An inventory and POS system that warns you before stock runs low.</p>
+          </div>
+          <div class="problem">
+            <p class="problem-pain">Enrollment week means long lines and piles of forms to encode.</p>
+            <p class="problem-fix">An enrollment system where records, payments, and reports are in one place.</p>
+          </div>
+          <div class="problem">
+            <p class="problem-pain">Customers can't find your hours or location unless they message you.</p>
+            <p class="problem-fix">A simple website that answers their questions before they ask.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section class="section services" id="services">
+      <div class="container">
+        <div class="section-head">
+          <h2>What we build</h2>
+          <p>Every project is made for your business. Prices below are starting points; your final quotation depends on the features you need.</p>
+        </div>
+
+        <div class="service-list">
+          <article class="service-row">
+            <h3>Landing page</h3>
+            <p>One to three pages with your services, hours, map, and Facebook link.</p>
+            <span class="service-time">1–2 weeks</span>
+            <span class="service-price">from ₱8,000</span>
+          </article>
+          <article class="service-row">
+            <h3>Business website</h3>
+            <p>Five to eight pages with a photo gallery and an inquiry form.</p>
+            <span class="service-time">2–4 weeks</span>
+            <span class="service-price">from ₱15,000</span>
+          </article>
+          <article class="service-row">
+            <h3>Reservation and booking system</h3>
+            <p>For resorts, clinics, and salons. Online bookings, deposits, and schedules.</p>
+            <span class="service-time">1–2 months</span>
+            <span class="service-price">from ₱30,000</span>
+          </article>
+          <article class="service-row">
+            <h3>Inventory and POS system</h3>
+            <p>For stores, pharmacies, and hardware. Sales, stock alerts, and reports.</p>
+            <span class="service-time">1–2 months</span>
+            <span class="service-price">from ₱35,000</span>
+          </article>
+          <article class="service-row">
+            <h3>Online store</h3>
+            <p>Product catalog, ordering, and GCash or Maya payments.</p>
+            <span class="service-time">1–2 months</span>
+            <span class="service-price">from ₱40,000</span>
+          </article>
+          <article class="service-row">
+            <h3>Enrollment and records system</h3>
+            <p>For small schools and cooperatives. Records, payments, and printable reports.</p>
+            <span class="service-time">2–3 months</span>
+            <span class="service-price">from ₱50,000</span>
+          </article>
+        </div>
+
+        <p class="service-extra">Need help after launch? Monthly support and updates start at ₱1,500.</p>
+      </div>
+    </section>
+
+    <!-- ================= PROCESS ================= -->
+    <section class="section process" id="process">
+      <div class="container">
+        <div class="section-head">
+          <h2>How we work</h2>
+          <p>Clear steps, so you always know what's happening with your project.</p>
+        </div>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step-num">1</span>
+            <h3>We talk</h3>
+            <p>We ask about your business, how you work today, and what's slowing you down.</p>
+          </li>
+          <li class="step">
+            <span class="step-num">2</span>
+            <h3>We plan and quote</h3>
+            <p>You get a written list of features, a timeline, and a price. No surprises later.</p>
+          </li>
+          <li class="step">
+            <span class="step-num">3</span>
+            <h3>We build and demo</h3>
+            <p>You see the system while it's being built and tell us what to adjust.</p>
+          </li>
+          <li class="step">
+            <span class="step-num">4</span>
+            <h3>We launch and train</h3>
+            <p>We set it up, train your staff, and hand over a simple user manual.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= WORK / PORTFOLIO ================= -->
+    <section class="section work" id="work">
+      <div class="container">
+        <div class="work-empty">
+          <h2>Our work</h2>
+          <p>Our first client projects are in progress. Want your business to be one of them?</p>
+          <a href="#contact" class="btn btn-primary">Start a project with us</a>
+        </div>
+        <!-- When you have projects, add them here, for example:
+        <div class="work-grid">
+          <article class="work-item">
+            <img src="assets/projects/project-1.jpg" alt="Booking system for a resort in Tabaco">
+            <h3>Resort booking system</h3>
+            <p>Tabaco City, Albay</p>
+          </article>
+        </div>
+        -->
+      </div>
+    </section>
+
+    <!-- ================= TEAM ================= -->
+    <section class="section team" id="team">
+      <div class="container">
+        <div class="section-head">
+          <h2>The team behind the name</h2>
+          <p>JLAAB comes from our five surnames. We studied computer science together and now build systems for the businesses around us.</p>
+        </div>
+
+        <!-- Edit first names and roles to match your team -->
+        <ul class="team-grid">
+          <li class="member">
+            <span class="member-letter">J</span>
+            <h3>[First name] Jadie</h3>
+            <p>Clients and sales</p>
+          </li>
+          <li class="member">
+            <span class="member-letter">L</span>
+            <h3>[First name] Landoy</h3>
+            <p>Design and frontend</p>
+          </li>
+          <li class="member">
+            <span class="member-letter">A</span>
+            <h3>[First name] Abanto</h3>
+            <p>Backend and database</p>
+          </li>
+          <li class="member">
+            <span class="member-letter">A</span>
+            <h3>[First name] Adigue</h3>
+            <p>Backend and database</p>
+          </li>
+          <li class="member">
+            <span class="member-letter">B</span>
+            <h3>[First name] Belen</h3>
+            <p>Testing, deployment, and docs</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="section contact" id="contact">
+      <div class="container contact-grid">
+        <div class="contact-info">
+          <h2>Tell us about your business</h2>
+          <p>Send us a few details and we'll reply within 2–3 days with questions or a quotation.</p>
+          <ul class="contact-links">
+            <li><span>Facebook</span><a href="https://facebook.com/" target="_blank" rel="noopener">JLAAB Dev Studio</a></li>
+            <li><span>Email</span><a href="mailto:jlaabdevstudio@gmail.com">jlaabdevstudio@gmail.com</a></li>
+            <li><span>Location</span>Albay, Bicol Region, Philippines</li>
+          </ul>
+        </div>
+
+        <!-- BACKEND NOTE: form fields use "name" attributes for the server.
+             Change action="" to your backend endpoint, e.g. action="/api/inquiries" -->
+        <form class="contact-form" id="contactForm" action="" method="POST" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="name">Your name</label>
+              <input type="text" id="name" name="name" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="business">Business name</label>
+              <input type="text" id="business" name="business_name" autocomplete="organization">
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="phone">Mobile number</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="09XX XXX XXXX">
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" autocomplete="email">
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="bizType">Type of business</label>
+              <select id="bizType" name="business_type">
+                <option value="">Choose one</option>
+                <option>Resort or hotel</option>
+                <option>Store or pharmacy</option>
+                <option>School or cooperative</option>
+                <option>Clinic or salon</option>
+                <option>Restaurant or café</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="service">What do you need?</label>
+              <select id="service" name="service">
+                <option value="">Choose one</option>
+                <option>Landing page</option>
+                <option>Business website</option>
+                <option>Reservation and booking system</option>
+                <option>Inventory and POS system</option>
+                <option>Online store</option>
+                <option>Enrollment and records system</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="message">Tell us what you'd like to improve</label>
+            <textarea id="message" name="message" rows="5" required placeholder="Example: We handle cottage reservations through Messenger and sometimes double-book."></textarea>
+          </div>
+
+          <p class="form-hint">Please give a mobile number or email so we can reply.</p>
+          <button type="submit" class="btn btn-primary btn-block">Send inquiry</button>
+          <p class="form-status" id="formStatus" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="brand">
+        <span class="logo-slot logo-slot-sm" aria-hidden="true">Logo</span>
+        <span class="brand-name">JLAAB <span class="brand-sub">Dev Studio</span></span>
+      </div>
+      <p>Websites and business systems made in Albay.</p>
+      <p class="footer-copy">&copy; <span id="year"></span> JLAAB Dev Studio</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
