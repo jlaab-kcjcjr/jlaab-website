@@ -121,6 +121,73 @@ a { color: var(--blue); }
 
 .section { padding: clamp(4rem, 8vw, 6.5rem) 0; }
 
+.journey-track { position: relative; height: 500vh; height: 500svh; }
+
+.journey-screen {
+  position: sticky;
+  top: 73px;
+  height: calc(100vh - 73px);
+  height: calc(100svh - 73px);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--bg);
+}
+
+.journey-panels { position: absolute; inset: 0; overflow: hidden; }
+
+.journey-panel {
+  --panel-y: 100%;
+  position: absolute;
+  inset: 0;
+  z-index: var(--panel-order);
+  overflow-y: auto;
+  padding: clamp(1.25rem, 3.5vh, 2.5rem) 0;
+  border-radius: 0;
+  background: var(--surface);
+  transform: translate3d(0, var(--panel-y), 0);
+  scrollbar-width: thin;
+}
+
+.journey-panel.section { margin: 0; padding: clamp(1.25rem, 3.5vh, 2.5rem) 0; }
+
+#work > .container,
+#services > .container,
+#process > .container {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  justify-content: safe center;
+}
+
+#contact > .container { min-height: 100%; align-content: safe center; }
+
+#home {
+  --panel-order: 1;
+  --panel-accent: var(--blue);
+  --panel-y: 0%;
+  background: var(--surface);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+#work { --panel-order: 2; --panel-accent: var(--blue); background: var(--bg); }
+#services { --panel-order: 3; --panel-accent: var(--orange); background: var(--surface); }
+#process { --panel-order: 4; --panel-accent: var(--blue); background: var(--bg); }
+#contact { --panel-order: 5; --panel-accent: var(--orange); background: var(--surface); }
+
+.journey-panel.hero {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: clamp(1.25rem, 3.5vh, 2.5rem) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.journey-panel.hero .hero-grid { grid-template-columns: 1fr; }
+
 .section-head {
   display: grid;
   gap: 0.9rem;
@@ -164,6 +231,16 @@ a { color: var(--blue); }
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
+}
+
+.site-header::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--blue);
 }
 
 .header-inner {
@@ -267,11 +344,6 @@ a { color: var(--blue); }
 .hero {
   position: relative;
   padding: clamp(3.5rem, 8vw, 6rem) 0 clamp(4rem, 8vw, 6.5rem);
-  /* Blueprint grid background */
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 32px 32px;
   border-bottom: 1px solid var(--line);
 }
 
