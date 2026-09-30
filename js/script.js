@@ -144,7 +144,7 @@ demoTabs.forEach((tab) => {
   });
 });
 
-renderDemo("resort");
+if (demoWindow && demoTitle && demoStats && demoList) renderDemo("resort");
 
 /* ---------- Contact form ---------- */
 const form = document.getElementById("contactForm");
@@ -216,3 +216,83 @@ form.addEventListener("submit", async (event) => {
 
 /* ---------- Footer year ---------- */
 document.getElementById("year").textContent = new Date().getFullYear();
+
+/* ---------- Pinned, scroll-driven section panels ---------- */
+const journeyTrack = document.getElementById("journeyTrack");
+const journeyScreen = document.getElementById("journeyScreen");
+const journeyPanels = [...document.querySelectorAll(".journey-panel")];
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const sectionHoldProgress = 0.5;
+const sectionScrollFactor = 1.35;
+const footerHoldScreens = 0.5;
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function getJourneyScrollRange() {
+  return journeyScreen.offsetHeight * (journeyPanels.length - 1) * sectionScrollFactor;
+}
+
+function getJourneyStep() {
+  const screenHeight = journeyScreen.offsetHeight;
+  const trackTop = journeyTrack.getBoundingClientRect().top + window.scrollY;
+  const stickyTop = parseFloat(getComputedStyle(journeyScreen).top) || 0;
+  const stageStart = trackTop - stickyTop;
+  const scrollRange = Math.max(1, getJourneyScrollRange());
+  return clamp((window.scrollY - stageStart) / scrollRange, 0, 1) * (journeyPanels.length - 1);
+}
+
+function updateJourney() {
+  const rawStep = getJourneyStep();
+  const lastIndex = journeyPanels.length - 1;
+  const intervalIndex = Math.min(Math.floor(rawStep), lastIndex - 1);
+  const intervalProgress = rawStep >= lastIndex ? 1 : rawStep - intervalIndex;
+  const step = rawStep >= lastIndex
+    ? lastIndex
+    : intervalIndex + clamp((intervalProgress - sectionHoldProgress) / (1 - sectionHoldProgress), 0, 1);
+  const activeIndex = Math.min(journeyPanels.length - 1, Math.floor(step + 0.5));
+
+  journeyPanels.forEach((panel, index) => {
+    const reveal = index === 0 ? 1 : clamp(step - (index - 1), 0, 1);
+    panel.style.setProperty("--panel-y", `${(1 - reveal) * 100}%`);
+    panel.inert = index !== activeIndex;
+    panel.setAttribute("aria-hidden", String(index !== activeIndex));
+  });
+}
+
+function sizeJourney() {
+  const scrollUnits = 1 + (journeyPanels.length - 1) * sectionScrollFactor + footerHoldScreens;
+  journeyTrack.style.height = `${journeyScreen.offsetHeight * scrollUnits}px`;
+  updateJourney();
+}
+
+function panelScrollTarget(panel) {
+  const panelIndex = journeyPanels.indexOf(panel);
+  const trackTop = journeyTrack.getBoundingClientRect().top + window.scrollY;
+  const stickyTop = parseFloat(getComputedStyle(journeyScreen).top) || 0;
+  const stageStart = trackTop - stickyTop;
+  const scrollRange = getJourneyScrollRange();
+  return stageStart + scrollRange * panelIndex / (journeyPanels.length - 1);
+}
+
+function goToPanel(panel) {
+  const target = panelScrollTarget(panel);
+  window.scrollTo({ top: target, behavior: reduceMotion ? "auto" : "smooth" });
+}
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const target = document.getElementById(link.getAttribute("href").slice(1));
+    const panel = target?.closest(".journey-panel");
+    if (!panel) return;
+
+    event.preventDefault();
+    window.history.replaceState(null, "", link.getAttribute("href"));
+    goToPanel(panel);
+  });
+});
+
+sizeJourney();
+window.addEventListener("resize", sizeJourney, { passive: true });
+window.addEventListener("scroll", updateJourney, { passive: true });
