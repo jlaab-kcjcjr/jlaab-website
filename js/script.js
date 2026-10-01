@@ -224,6 +224,15 @@ const journeyPanels = [...document.querySelectorAll(".journey-panel")];
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const sectionHoldProgress = 0.5;
 const sectionScrollFactor = 1.35;
+const workPanelIndex = journeyPanels.findIndex((panel) => panel.id === "work");
+const workSlides = [...document.querySelectorAll(".work-slide")];
+const workViewport = document.querySelector(".work-viewport");
+const workSlideGap = parseFloat(getComputedStyle(workViewport).getPropertyValue("--slide-gap")) || 0;
+const workSlideTransitionDuration = reduceMotion
+  ? 0
+  : parseFloat(getComputedStyle(workViewport).getPropertyValue("--slide-transition-duration")) || 850;
+const workSlideScrollFactor = 0.75;
+const workImageScrollUnits = Math.max(0, workSlides.length - 1) * workSlideScrollFactor;
 const footerHoldScreens = 0.5;
 
 function clamp(value, min, max) {
@@ -231,26 +240,42 @@ function clamp(value, min, max) {
 }
 
 function getJourneyScrollRange() {
-  return journeyScreen.offsetHeight * (journeyPanels.length - 1) * sectionScrollFactor;
+  const totalUnits = Array.from({ length: journeyPanels.length - 1 }, (_, index) =>
+    sectionScrollFactor + (index === workPanelIndex ? workImageScrollUnits : 0)
+  ).reduce((total, duration) => total + duration, 0);
+  return journeyScreen.offsetHeight * totalUnits;
 }
 
-function getJourneyStep() {
+function getJourneyPosition() {
   const screenHeight = journeyScreen.offsetHeight;
   const trackTop = journeyTrack.getBoundingClientRect().top + window.scrollY;
   const stickyTop = parseFloat(getComputedStyle(journeyScreen).top) || 0;
   const stageStart = trackTop - stickyTop;
-  const scrollRange = Math.max(1, getJourneyScrollRange());
-  return clamp((window.scrollY - stageStart) / scrollRange, 0, 1) * (journeyPanels.length - 1);
+  let remaining = clamp((window.scrollY - stageStart) / screenHeight, 0, getJourneyScrollRange() / screenHeight);
+
+  for (let index = 0; index < journeyPanels.length - 1; index += 1) {
+    const duration = sectionScrollFactor + (index === workPanelIndex ? workImageScrollUnits : 0);
+    if (remaining <= duration || index === journeyPanels.length - 2) {
+      return { intervalIndex: index, intervalElapsed: Math.min(remaining, duration) };
+    }
+    remaining -= duration;
+  }
+
+  return { intervalIndex: journeyPanels.length - 2, intervalElapsed: sectionScrollFactor };
 }
 
 function updateJourney() {
-  const rawStep = getJourneyStep();
+  const { intervalIndex, intervalElapsed } = getJourneyPosition();
   const lastIndex = journeyPanels.length - 1;
-  const intervalIndex = Math.min(Math.floor(rawStep), lastIndex - 1);
-  const intervalProgress = rawStep >= lastIndex ? 1 : rawStep - intervalIndex;
-  const step = rawStep >= lastIndex
-    ? lastIndex
-    : intervalIndex + clamp((intervalProgress - sectionHoldProgress) / (1 - sectionHoldProgress), 0, 1);
+  const imageElapsed = intervalIndex === workPanelIndex
+    ? clamp(intervalElapsed, 0, workImageScrollUnits)
+    : intervalIndex > workPanelIndex ? workImageScrollUnits : 0;
+  const imageProgress = workSlideScrollFactor
+    ? Math.round(clamp(imageElapsed / workSlideScrollFactor, 0, Math.max(0, workSlides.length - 1)))
+    : 0;
+  const transitionElapsed = intervalElapsed - (intervalIndex === workPanelIndex ? workImageScrollUnits : 0);
+  const intervalProgress = clamp(transitionElapsed / sectionScrollFactor, 0, 1);
+  const step = intervalIndex + clamp((intervalProgress - sectionHoldProgress) / (1 - sectionHoldProgress), 0, 1);
   const activeIndex = Math.min(journeyPanels.length - 1, Math.floor(step + 0.5));
 
   journeyPanels.forEach((panel, index) => {
@@ -259,12 +284,27 @@ function updateJourney() {
     panel.inert = index !== activeIndex;
     panel.setAttribute("aria-hidden", String(index !== activeIndex));
   });
+
+  const activeSlide = Math.min(workSlides.length - 1, Math.floor(imageProgress + 0.5));
+  workSlides.forEach((slide, index) => {
+    const slideDistance = workViewport.clientWidth + workSlideGap;
+    slide.style.setProperty("--slide-x", `${(index - imageProgress) * slideDistance}px`);
+    slide.setAttribute("aria-hidden", String(index !== activeSlide));
+  });
 }
 
 function sizeJourney() {
-  const scrollUnits = 1 + (journeyPanels.length - 1) * sectionScrollFactor + footerHoldScreens;
+  const scrollUnits = 1 + getJourneyScrollRange() / journeyScreen.offsetHeight + footerHoldScreens;
   journeyTrack.style.height = `${journeyScreen.offsetHeight * scrollUnits}px`;
   updateJourney();
+}
+
+const heroScene = document.querySelector(".hero-scene");
+
+function sizeHeroScene() {
+  const sceneSize = Math.min(heroScene.clientWidth, heroScene.clientHeight);
+  const sceneZoom = window.matchMedia("(min-width: 961px)").matches ? 2.5 : 1;
+  heroScene.style.setProperty("--scene-scale", String((sceneSize / 1200) * sceneZoom));
 }
 
 function panelScrollTarget(panel) {
@@ -272,8 +312,53 @@ function panelScrollTarget(panel) {
   const trackTop = journeyTrack.getBoundingClientRect().top + window.scrollY;
   const stickyTop = parseFloat(getComputedStyle(journeyScreen).top) || 0;
   const stageStart = trackTop - stickyTop;
-  const scrollRange = getJourneyScrollRange();
-  return stageStart + scrollRange * panelIndex / (journeyPanels.length - 1);
+  const precedingUnits = Array.from({ length: panelIndex }, (_, index) =>
+    sectionScrollFactor + (index === workPanelIndex ? workImageScrollUnits : 0)
+  ).reduce((total, duration) => total + duration, 0);
+  return stageStart + journeyScreen.offsetHeight * precedingUnits + (panelIndex > 0 ? 1 : 0);
+}
+
+let workWheelLocked = false;
+let workWheelUnlockTimer;
+let workWheelAnimationEnd = 0;
+
+function scheduleWorkWheelUnlock() {
+  window.clearTimeout(workWheelUnlockTimer);
+  const remaining = Math.max(0, workWheelAnimationEnd - performance.now());
+  workWheelUnlockTimer = window.setTimeout(() => { workWheelLocked = false; }, remaining + 120);
+}
+
+function handleWorkWheel(event) {
+  if (!event.deltaY) return;
+
+  const { intervalIndex, intervalElapsed } = getJourneyPosition();
+  if (intervalIndex !== workPanelIndex) {
+    workWheelLocked = false;
+    window.clearTimeout(workWheelUnlockTimer);
+    return;
+  }
+
+  if (workWheelLocked) {
+    event.preventDefault();
+    scheduleWorkWheelUnlock();
+    return;
+  }
+
+  if (intervalElapsed >= workImageScrollUnits) return;
+
+  const lastSlide = workSlides.length - 1;
+  const currentSlide = Math.round(clamp(intervalElapsed / workSlideScrollFactor, 0, lastSlide));
+  const nextSlide = currentSlide + Math.sign(event.deltaY);
+  if (nextSlide < 0 || nextSlide > lastSlide) return;
+
+  event.preventDefault();
+  workWheelLocked = true;
+  workWheelAnimationEnd = performance.now() + workSlideTransitionDuration;
+  scheduleWorkWheelUnlock();
+  window.scrollTo({
+    top: panelScrollTarget(journeyPanels[workPanelIndex]) + nextSlide * workSlideScrollFactor * journeyScreen.offsetHeight,
+    behavior: "instant",
+  });
 }
 
 function goToPanel(panel) {
@@ -294,5 +379,8 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 });
 
 sizeJourney();
+sizeHeroScene();
 window.addEventListener("resize", sizeJourney, { passive: true });
+window.addEventListener("resize", sizeHeroScene, { passive: true });
 window.addEventListener("scroll", updateJourney, { passive: true });
+window.addEventListener("wheel", handleWorkWheel, { passive: false });
