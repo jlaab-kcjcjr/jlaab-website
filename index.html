@@ -56,6 +56,9 @@
         <div class="journey-panels">
     <!-- ================= HERO ================= -->
     <section class="hero journey-panel" id="home">
+      <div class="hero-scene" aria-hidden="true">
+        <iframe src="https://my.spline.design/cubic-RS9iS9K3Gxf4Y8a7pB3ELNUr/" title="Interactive cubic 3D scene" tabindex="-1" loading="eager"></iframe>
+      </div>
       <div class="container hero-grid">
         <div class="hero-copy">
           <h1>Less paperwork.<br>More business.</h1>
@@ -64,7 +67,7 @@
           </p>
           <div class="hero-actions">
             <a href="#contact" class="btn btn-primary">Start a project</a>
-            <a href="#services" class="btn btn-ghost">See what we build</a>
+            <a href="#services" class="btn btn-ghost"><span class="btn-ghost-label">See what we build</span><span class="btn-ghost-arrow" aria-hidden="true">→</span></a>
           </div>
           <p class="hero-note">Free consultation. Quotation within 2–3 days.</p>
         </div>
@@ -74,20 +77,30 @@
     <!-- ================= WORK / PORTFOLIO ================= -->
     <section class="section work journey-panel" id="work">
       <div class="container">
-        <div class="work-empty">
+        <div class="work-heading">
           <h2>Our work</h2>
-          <p>Our first client projects are in progress. Want your business to be one of them?</p>
-          <a href="#contact" class="btn btn-primary">Start a project with us</a>
+          <p>A few of the websites and business systems we've designed for Bicol.</p>
         </div>
-        <!-- When you have projects, add them here, for example:
-        <div class="work-grid">
-          <article class="work-item">
-            <img src="assets/projects/project-1.jpg" alt="Booking system for a resort in Tabaco">
-            <h3>Resort booking system</h3>
-            <p>Tabaco City, Albay</p>
-          </article>
+        <div class="work-showcase" aria-label="Selected website and system projects">
+          <div class="work-viewport">
+            <figure class="work-slide" aria-hidden="false">
+              <img src="assets/lagalalas-car-rentals.png" alt="Lagalalas car rental website featuring a vehicle search form">
+              <figcaption>Lagalalas car rentals</figcaption>
+            </figure>
+            <figure class="work-slide" aria-hidden="true">
+              <img src="assets/pili-mart-pos.png" alt="Pili Mart point-of-sale system with product inventory and checkout">
+              <figcaption>Pili Mart point of sale</figcaption>
+            </figure>
+            <figure class="work-slide" aria-hidden="true">
+              <img src="assets/villa-alon-dashboard.png" alt="Villa Alon resort booking and revenue dashboard">
+              <figcaption>Villa Alon bookings dashboard</figcaption>
+            </figure>
+            <figure class="work-slide" aria-hidden="true">
+              <img src="assets/provincial-records-system.png" alt="Provincial government records management system">
+              <figcaption>Provincial records system</figcaption>
+            </figure>
+          </div>
         </div>
-        -->
       </div>
     </section>
 
