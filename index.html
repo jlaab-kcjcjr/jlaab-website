@@ -25,18 +25,16 @@
   <header class="site-header">
     <div class="container header-inner">
       <a href="#top" class="brand" aria-label="JLAAB Dev Studio home">
-        <!-- LOGO: replace this span with your logo when it's ready:
-             <img src="assets/logo.png" alt="JLAAB Dev Studio" class="brand-logo"> -->
-        <span class="logo-slot" aria-hidden="true">Logo</span>
+      <img src="assets/jlaab-dark.png" alt="JLAAB Dev Studio" class="brand-logo logo-on-light">
+      <img src="assets/jlaab-light.png" alt="" class="brand-logo logo-on-dark" aria-hidden="true">
         <span class="brand-name">JLAAB <span class="brand-sub">Dev Studio</span></span>
       </a>
 
       <nav class="main-nav" id="mainNav" aria-label="Main">
+        <a href="#work">Projects</a>
         <a href="#services">Services</a>
         <a href="#process">How we work</a>
-        <a href="#work">Work</a>
-        <a href="#team">Team</a>
-        <a href="#contact" class="btn btn-primary nav-cta">Message us</a>
+        <a href="#contact">Contact us</a>
       </nav>
 
       <div class="header-actions">
@@ -52,123 +50,111 @@
   </header>
 
   <main id="top">
-
+    <div class="journey-track" id="journeyTrack">
+      <div class="journey-screen" id="journeyScreen">
+        <div class="journey-panels">
     <!-- ================= HERO ================= -->
-    <section class="hero">
+    <section class="hero journey-panel" id="home">
+      <div class="hero-scene" aria-hidden="true">
+        <iframe src="https://my.spline.design/cubic-RS9iS9K3Gxf4Y8a7pB3ELNUr/" title="Interactive cubic 3D scene" tabindex="-1" loading="eager"></iframe>
+      </div>
       <div class="container hero-grid">
         <div class="hero-copy">
           <h1>Less paperwork.<br>More business.</h1>
           <p class="hero-lead">
-            We're five Bicolano developers building websites and custom systems
-            for resorts, stores, schools, and clinics across Albay and Bicol.
+           We are Bicolano developers building custom AI tools, web applications, and automated workflows for local businesses and independent innovators across Bicol.
           </p>
           <div class="hero-actions">
-            <a href="#contact" class="btn btn-primary">Tell us about your business</a>
-            <a href="#services" class="btn btn-ghost">See what we build</a>
+            <a href="#contact" class="btn btn-primary">Start a project</a>
+            <a href="#services" class="btn btn-ghost"><span class="btn-ghost-label">See what we build</span><span class="btn-ghost-arrow" aria-hidden="true">→</span></a>
           </div>
           <p class="hero-note">Free consultation. Quotation within 2–3 days.</p>
-        </div>
-
-        <!-- Interactive sample: visitor picks a business type -->
-        <div class="demo">
-          <div class="demo-tabs" role="tablist" aria-label="Choose a business type">
-            <button class="demo-tab is-active" role="tab" aria-selected="true" data-biz="resort">Resort</button>
-            <button class="demo-tab" role="tab" aria-selected="false" data-biz="store">Store</button>
-            <button class="demo-tab" role="tab" aria-selected="false" data-biz="school">School</button>
-            <button class="demo-tab" role="tab" aria-selected="false" data-biz="clinic">Clinic</button>
-          </div>
-
-          <div class="demo-window" id="demoWindow" aria-live="polite">
-            <div class="demo-bar">
-              <span class="demo-title" id="demoTitle">Cottage reservations</span>
-              <span class="demo-badge">Sample system</span>
-            </div>
-            <div class="demo-stats" id="demoStats"></div>
-            <ul class="demo-list" id="demoList"></ul>
-          </div>
-          <p class="demo-caption">Tap a business type to see the kind of system we can build for you.</p>
         </div>
       </div>
     </section>
 
-    <!-- ================= PROBLEMS ================= -->
-    <section class="section problems">
+    <!-- ================= WORK / PORTFOLIO ================= -->
+    <section class="section work journey-panel" id="work">
       <div class="container">
-        <h2>Sound familiar?</h2>
-        <div class="problem-grid">
-          <div class="problem">
-            <p class="problem-pain">Two families booked the same cottage because reservations live in a notebook.</p>
-            <p class="problem-fix">A booking system that blocks taken dates and records GCash deposits.</p>
-          </div>
-          <div class="problem">
-            <p class="problem-pain">You count stock by hand every night and still run out of best-sellers.</p>
-            <p class="problem-fix">An inventory and POS system that warns you before stock runs low.</p>
-          </div>
-          <div class="problem">
-            <p class="problem-pain">Enrollment week means long lines and piles of forms to encode.</p>
-            <p class="problem-fix">An enrollment system where records, payments, and reports are in one place.</p>
-          </div>
-          <div class="problem">
-            <p class="problem-pain">Customers can't find your hours or location unless they message you.</p>
-            <p class="problem-fix">A simple website that answers their questions before they ask.</p>
+        <div class="work-heading">
+          <h2>Our work</h2>
+          <p>A few of the websites and business systems we've designed for Bicol.</p>
+        </div>
+        <div class="work-showcase" aria-label="Selected website and system projects">
+          <div class="work-viewport">
+            <figure class="work-slide" aria-hidden="false">
+              <img src="assets/lagalalas-car-rentals.png" alt="Lagalalas car rental website featuring a vehicle search form">
+              <figcaption>Lagalalas car rentals</figcaption>
+            </figure>
+            <figure class="work-slide" aria-hidden="true">
+              <img src="assets/pili-mart-pos.png" alt="Pili Mart point-of-sale system with product inventory and checkout">
+              <figcaption>Pili Mart point of sale</figcaption>
+            </figure>
+            <figure class="work-slide" aria-hidden="true">
+              <img src="assets/villa-alon-dashboard.png" alt="Villa Alon resort booking and revenue dashboard">
+              <figcaption>Villa Alon bookings dashboard</figcaption>
+            </figure>
+            <figure class="work-slide" aria-hidden="true">
+              <img src="assets/provincial-records-system.png" alt="Provincial government records management system">
+              <figcaption>Provincial records system</figcaption>
+            </figure>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ================= SERVICES ================= -->
-    <section class="section services" id="services">
-      <div class="container">
-        <div class="section-head">
-          <h2>What we build</h2>
-          <p>Every project is made for your business. Prices below are starting points; your final quotation depends on the features you need.</p>
-        </div>
+<section class="section services journey-panel" id="services">
+  <div class="container">
+    <div class="section-head">
+      <h2>Solutions We Deliver</h2>
+      <p>
+        Every business and technical project is unique. We engineer custom digital platforms, automated workflows, and intelligent software tailored precisely to your operational needs and timeline.
+      </p>
+    </div>
 
-        <div class="service-list">
-          <article class="service-row">
-            <h3>Landing page</h3>
-            <p>One to three pages with your services, hours, map, and Facebook link.</p>
-            <span class="service-time">1–2 weeks</span>
-            <span class="service-price">from ₱8,000</span>
-          </article>
-          <article class="service-row">
-            <h3>Business website</h3>
-            <p>Five to eight pages with a photo gallery and an inquiry form.</p>
-            <span class="service-time">2–4 weeks</span>
-            <span class="service-price">from ₱15,000</span>
-          </article>
-          <article class="service-row">
-            <h3>Reservation and booking system</h3>
-            <p>For resorts, clinics, and salons. Online bookings, deposits, and schedules.</p>
-            <span class="service-time">1–2 months</span>
-            <span class="service-price">from ₱30,000</span>
-          </article>
-          <article class="service-row">
-            <h3>Inventory and POS system</h3>
-            <p>For stores, pharmacies, and hardware. Sales, stock alerts, and reports.</p>
-            <span class="service-time">1–2 months</span>
-            <span class="service-price">from ₱35,000</span>
-          </article>
-          <article class="service-row">
-            <h3>Online store</h3>
-            <p>Product catalog, ordering, and GCash or Maya payments.</p>
-            <span class="service-time">1–2 months</span>
-            <span class="service-price">from ₱40,000</span>
-          </article>
-          <article class="service-row">
-            <h3>Enrollment and records system</h3>
-            <p>For small schools and cooperatives. Records, payments, and printable reports.</p>
-            <span class="service-time">2–3 months</span>
-            <span class="service-price">from ₱50,000</span>
-          </article>
-        </div>
+    <div class="service-list">
+      <article class="service-row">
+        <h3>Custom Web Applications & Platforms</h3>
+        <p>
+          High-performance web applications built with modern architectures, responsive interfaces, and seamless database integrations designed to scale with your growth.
+        </p>
+        <span class="service-tag">Tailored Architecture</span>
+      </article>
 
-        <p class="service-extra">Need help after launch? Monthly support and updates start at ₱1,500.</p>
-      </div>
-    </section>
+      <article class="service-row">
+        <h3>AI Integration & Smart Automation</h3>
+        <p>
+          Streamline time-consuming tasks with custom AI solutions—including intelligent chatbots, automated data processing, predictive tools, and custom API connections.
+        </p>
+        <span class="service-tag">Workflow Optimization</span>
+      </article>
+
+      <article class="service-row">
+        <h3>Business Management & Operational Systems</h3>
+        <p>
+          Comprehensive operational tools—from inventory tracking and booking platforms to record management systems—designed for exact precision and reliability.
+        </p>
+        <span class="service-tag">Enterprise Efficiency</span>
+      </article>
+
+      <article class="service-row">
+        <h3>Technical Consulting & Custom Algorithms</h3>
+        <p>
+          Expert development support for complex logic, system architecture, database design, and advanced algorithmic implementations tailored to exact project specifications.
+        </p>
+        <span class="service-tag">Precision Engineering</span>
+      </article>
+    </div>
+
+    <p class="service-extra">
+      Have a specific technical requirement or custom project in mind? <strong>Contact us for a tailored proposal and project estimate.</strong>
+    </p>
+  </div>
+</section>
 
     <!-- ================= PROCESS ================= -->
-    <section class="section process" id="process">
+    <section class="section process journey-panel" id="process">
       <div class="container">
         <div class="section-head">
           <h2>How we work</h2>
@@ -200,149 +186,93 @@
       </div>
     </section>
 
-    <!-- ================= WORK / PORTFOLIO ================= -->
-    <section class="section work" id="work">
-      <div class="container">
-        <div class="work-empty">
-          <h2>Our work</h2>
-          <p>Our first client projects are in progress. Want your business to be one of them?</p>
-          <a href="#contact" class="btn btn-primary">Start a project with us</a>
+    
+
+<!-- ================= CONTACT ================= -->
+<section class="section contact journey-panel" id="contact">
+  <div class="container contact-grid">
+    <div class="contact-info">
+      <h2>Let’s build something together</h2>
+      <p>Share a few details about your project, and our team will get back to you within 24 hours.</p>
+      <ul class="contact-links">
+        <li><span>Facebook</span><a href="https://facebook.com/" target="_blank" rel="noopener">JLAAB Dev Studio</a></li>
+        <li><span>Email</span><a href="mailto:jlaabdevstudio@gmail.com">jlaabdevstudio@gmail.com</a></li>
+        <li><span>Location</span>Albay, Bicol Region, Philippines</li>
+      </ul>
+    </div>
+
+    <!-- BACKEND NOTE: form fields use "name" attributes for the server.
+         Change action="" to your backend endpoint, e.g. action="/api/inquiries" -->
+    <form class="contact-form" id="contactForm" action="" method="POST" novalidate>
+      <div class="field-row">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" autocomplete="name" required placeholder="Juan dela Cruz">
         </div>
-        <!-- When you have projects, add them here, for example:
-        <div class="work-grid">
-          <article class="work-item">
-            <img src="assets/projects/project-1.jpg" alt="Booking system for a resort in Tabaco">
-            <h3>Resort booking system</h3>
-            <p>Tabaco City, Albay</p>
-          </article>
+        <div class="field">
+          <label for="organization">Company or Organization <span class="optional">(Optional)</span></label>
+          <input type="text" id="organization" name="organization" autocomplete="organization" placeholder="Business, Institution, or Self">
         </div>
-        -->
       </div>
-    </section>
 
-    <!-- ================= TEAM ================= -->
-    <section class="section team" id="team">
-      <div class="container">
-        <div class="section-head">
-          <h2>The team behind the name</h2>
-          <p>JLAAB comes from our five surnames. We studied computer science together and now build systems for the businesses around us.</p>
+      <div class="field-row">
+        <div class="field">
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" autocomplete="email" required placeholder="name@example.com">
         </div>
-
-        <!-- Edit first names and roles to match your team -->
-        <ul class="team-grid">
-          <li class="member">
-            <span class="member-letter">J</span>
-            <h3>[First name] Jadie</h3>
-            <p>Clients and sales</p>
-          </li>
-          <li class="member">
-            <span class="member-letter">L</span>
-            <h3>[First name] Landoy</h3>
-            <p>Design and frontend</p>
-          </li>
-          <li class="member">
-            <span class="member-letter">A</span>
-            <h3>[First name] Abanto</h3>
-            <p>Backend and database</p>
-          </li>
-          <li class="member">
-            <span class="member-letter">A</span>
-            <h3>[First name] Adigue</h3>
-            <p>Backend and database</p>
-          </li>
-          <li class="member">
-            <span class="member-letter">B</span>
-            <h3>[First name] Belen</h3>
-            <p>Testing, deployment, and docs</p>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ================= CONTACT ================= -->
-    <section class="section contact" id="contact">
-      <div class="container contact-grid">
-        <div class="contact-info">
-          <h2>Tell us about your business</h2>
-          <p>Send us a few details and we'll reply within 2–3 days with questions or a quotation.</p>
-          <ul class="contact-links">
-            <li><span>Facebook</span><a href="https://facebook.com/" target="_blank" rel="noopener">JLAAB Dev Studio</a></li>
-            <li><span>Email</span><a href="mailto:jlaabdevstudio@gmail.com">jlaabdevstudio@gmail.com</a></li>
-            <li><span>Location</span>Albay, Bicol Region, Philippines</li>
-          </ul>
+        <div class="field">
+          <label for="phone">Mobile number <span class="optional">(Optional)</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="09XX XXX XXXX">
         </div>
-
-        <!-- BACKEND NOTE: form fields use "name" attributes for the server.
-             Change action="" to your backend endpoint, e.g. action="/api/inquiries" -->
-        <form class="contact-form" id="contactForm" action="" method="POST" novalidate>
-          <div class="field-row">
-            <div class="field">
-              <label for="name">Your name</label>
-              <input type="text" id="name" name="name" autocomplete="name" required>
-            </div>
-            <div class="field">
-              <label for="business">Business name</label>
-              <input type="text" id="business" name="business_name" autocomplete="organization">
-            </div>
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label for="phone">Mobile number</label>
-              <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="09XX XXX XXXX">
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" autocomplete="email">
-            </div>
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label for="bizType">Type of business</label>
-              <select id="bizType" name="business_type">
-                <option value="">Choose one</option>
-                <option>Resort or hotel</option>
-                <option>Store or pharmacy</option>
-                <option>School or cooperative</option>
-                <option>Clinic or salon</option>
-                <option>Restaurant or café</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="service">What do you need?</label>
-              <select id="service" name="service">
-                <option value="">Choose one</option>
-                <option>Landing page</option>
-                <option>Business website</option>
-                <option>Reservation and booking system</option>
-                <option>Inventory and POS system</option>
-                <option>Online store</option>
-                <option>Enrollment and records system</option>
-                <option>Not sure yet</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <label for="message">Tell us what you'd like to improve</label>
-            <textarea id="message" name="message" rows="5" required placeholder="Example: We handle cottage reservations through Messenger and sometimes double-book."></textarea>
-          </div>
-
-          <p class="form-hint">Please give a mobile number or email so we can reply.</p>
-          <button type="submit" class="btn btn-primary btn-block">Send inquiry</button>
-          <p class="form-status" id="formStatus" role="status"></p>
-        </form>
       </div>
-    </section>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="clientType">Who are you representing?</label>
+          <select id="clientType" name="client_type">
+            <option value="">Select option</option>
+            <option>Small Business / Enterprise</option>
+            <option>Independent Innovator / Creator</option>
+            <option>Academic / Researcher</option>
+            <option>Startup / New Venture</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="service">How can we help?</label>
+          <select id="service" name="service">
+            <option value="">Select option</option>
+            <option>Custom Web Application</option>
+            <option>AI Integration & Smart Automation</option>
+            <option>Business Management System</option>
+            <option>Technical Consulting & Algorithms</option>
+            <option>Other / Custom Inquiry</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="message">Tell us about your project or goal</label>
+        <textarea id="message" name="message" rows="5" required placeholder="Describe your current challenge, project ideas, or the solution you want us to build..."></textarea>
+      </div>
+
+      <p class="form-hint">We respect your privacy and respond within 24 hours.</p>
+      <button type="submit" class="btn btn-primary btn-block">Send message</button>
+      <p class="form-status" id="formStatus" role="status"></p>
+    </form>
+  </div>
+</section>
+        </div>
+      </div>
+    </div>
   </main>
 
   <!-- ================= FOOTER ================= -->
   <footer class="site-footer">
     <div class="container footer-inner">
       <div class="brand">
-        <span class="logo-slot logo-slot-sm" aria-hidden="true">Logo</span>
+      <img src="assets/jlaab-dark.png" alt="JLAAB Dev Studio" class="brand-logo logo-on-light">
+      <img src="assets/jlaab-light.png" alt="" class="brand-logo logo-on-dark" aria-hidden="true">
         <span class="brand-name">JLAAB <span class="brand-sub">Dev Studio</span></span>
       </div>
       <p>Websites and business systems made in Albay.</p>
