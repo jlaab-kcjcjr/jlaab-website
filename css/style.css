@@ -209,6 +209,7 @@ a { color: var(--blue); }
   border: 0;
   transform: translate(-50%, -50%) scale(var(--scene-scale, 0.5));
   transform-origin: center;
+
   color-scheme: normal;      /* keeps the iframe transparent in dark mode */
   background: transparent;
 }
@@ -717,6 +718,7 @@ a { color: var(--blue); }
   width: 100%;
   /* Fits the screen below the header and the "Our work" heading */
   height: min(calc(100svh - 73px - 12rem), 720px, calc(56.25cqi + 3.375rem));
+  height: min(80svh, 720px, calc(56.25cqi + 3.375rem));
   min-height: 180px;
   overflow: hidden;
   isolation: isolate;
@@ -745,6 +747,8 @@ a { color: var(--blue); }
   object-fit: contain;          /* show the whole screenshot, never crop */
   object-position: center;
   background: var(--surface-2); /* soft fill if an image is a different shape */
+  object-fit: cover;
+  background: transparent;
 }
 
 .work-slide figcaption {
