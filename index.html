@@ -264,6 +264,12 @@
         <textarea id="message" name="message" rows="5" required placeholder="Describe your current challenge, project ideas, or the solution you want us to build..."></textarea>
       </div>
 
+      <!-- Spam trap: hidden from people, bots usually fill it -->
+      <div class="hp-field" aria-hidden="true">
+        <label for="website">Website</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
       <p class="form-hint">We respect your privacy and respond within 24 hours.</p>
       <button type="submit" class="btn btn-primary btn-block">Send message</button>
       <p class="form-status" id="formStatus" role="status"></p>

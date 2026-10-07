@@ -161,10 +161,10 @@ form.addEventListener("submit", async (event) => {
   // Clear old errors
   form.querySelectorAll(".field").forEach((f) => f.classList.remove("has-error"));
 
-  const name = form.elements.name.value.trim();
-  const phone = form.elements.phone.value.trim();
-  const email = form.elements.email.value.trim();
-  const message = form.elements.message.value.trim();
+  const get = (fieldName) => (form.elements[fieldName]?.value || "").trim();
+  const name = get("name");
+  const email = get("email");
+  const message = get("message");
 
   if (!name) {
     form.elements.name.closest(".field").classList.add("has-error");
@@ -173,45 +173,53 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
-  if (!phone && !email) {
-    form.elements.phone.closest(".field").classList.add("has-error");
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     form.elements.email.closest(".field").classList.add("has-error");
-    setStatus("Add a mobile number or email so we can reply.", "error");
-    form.elements.phone.focus();
-    return;
-  }
-
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    form.elements.email.closest(".field").classList.add("has-error");
-    setStatus("Check your email address. It should look like name@example.com.", "error");
+    setStatus("Enter a valid email address, like name@example.com.", "error");
     form.elements.email.focus();
     return;
   }
 
   if (!message) {
     form.elements.message.closest(".field").classList.add("has-error");
-    setStatus("Tell us a little about what you need.", "error");
+    setStatus("Tell us a little about your project or goal.", "error");
     form.elements.message.focus();
     return;
   }
 
-  /* ===== BACKEND: connect the form here =====
-     Uncomment this block once the backend endpoint is ready.
+  const button = form.querySelector('button[type="submit"]');
+  const buttonLabel = button.textContent;
+  button.disabled = true;
+  button.textContent = "Sending...";
+  setStatus("", "info");
 
   try {
     const response = await fetch("/api/inquiries", {
       method: "POST",
-      body: new FormData(form),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        organization: get("organization"),
+        email,
+        phone: get("phone"),
+        client_type: get("client_type"),
+        service: get("service"),
+        message,
+        website: get("website"), // spam trap
+      }),
     });
-    if (!response.ok) throw new Error("Request failed");
-  } catch (error) {
-    setStatus("Inquiry not sent. Check your connection and try again, or message us on Facebook.", "error");
-    return;
-  }
-  */
 
-  setStatus("Inquiry sent. We'll reply within 2–3 days.", "success");
-  form.reset();
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || "We couldn't send your message.");
+
+    setStatus("Message sent! We'll get back to you within 24 hours.", "success");
+    form.reset();
+  } catch (error) {
+    setStatus(`${error.message} You can also email us at jlaabdevstudio@gmail.com.`, "error");
+  } finally {
+    button.disabled = false;
+    button.textContent = buttonLabel;
+  }
 });
 
 /* ---------- Footer year ---------- */
