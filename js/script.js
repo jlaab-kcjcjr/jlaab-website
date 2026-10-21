@@ -243,6 +243,10 @@ const workSlideScrollFactor = 0.75;
 const workImageScrollUnits = Math.max(0, workSlides.length - 1) * workSlideScrollFactor;
 const footerHoldScreens = 0.5;
 
+// Panel animation only on large screens where every section fits without inner scrolling
+const journeyQuery = window.matchMedia("(min-width: 1024px) and (min-height: 860px)");
+const journeyEnabled = () => journeyQuery.matches && !reduceMotion;
+
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
@@ -273,6 +277,7 @@ function getJourneyPosition() {
 }
 
 function updateJourney() {
+  if (!journeyEnabled()) return;
   const { intervalIndex, intervalElapsed } = getJourneyPosition();
   const lastIndex = journeyPanels.length - 1;
   const imageElapsed = intervalIndex === workPanelIndex
@@ -302,6 +307,7 @@ function updateJourney() {
 }
 
 function sizeJourney() {
+  if (!journeyEnabled()) return;
   const scrollUnits = 1 + getJourneyScrollRange() / journeyScreen.offsetHeight + footerHoldScreens;
   journeyTrack.style.height = `${journeyScreen.offsetHeight * scrollUnits}px`;
   updateJourney();
@@ -337,6 +343,7 @@ function scheduleWorkWheelUnlock() {
 }
 
 function handleWorkWheel(event) {
+  if (!journeyEnabled()) return;
   if (!event.deltaY) return;
 
   const { intervalIndex, intervalElapsed } = getJourneyPosition();
@@ -376,6 +383,8 @@ function goToPanel(panel) {
 
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener("click", (event) => {
+    if (!journeyEnabled()) return; // normal page: let the link scroll by itself
+
     const target = document.getElementById(link.getAttribute("href").slice(1));
     const panel = target?.closest(".journey-panel");
     if (!panel) return;
@@ -386,9 +395,33 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
   });
 });
 
-sizeJourney();
-sizeHeroScene();
-window.addEventListener("resize", sizeJourney, { passive: true });
-window.addEventListener("resize", sizeHeroScene, { passive: true });
+function applyJourneyMode() {
+  const on = journeyEnabled();
+  root.classList.toggle("no-journey", !on);
+
+  if (on) {
+    sizeJourney();
+  } else {
+    // Clear the animation styles so sections sit in normal page order
+    journeyTrack.style.height = "";
+    journeyPanels.forEach((panel) => {
+      panel.style.removeProperty("--panel-y");
+      panel.inert = false;
+      panel.removeAttribute("aria-hidden");
+    });
+    workSlides.forEach((slide) => {
+      slide.style.removeProperty("--slide-x");
+      slide.removeAttribute("aria-hidden");
+    });
+  }
+  sizeHeroScene();
+}
+
+applyJourneyMode();
+journeyQuery.addEventListener("change", applyJourneyMode);
+window.addEventListener("resize", () => {
+  if (journeyEnabled()) sizeJourney();
+  sizeHeroScene();
+}, { passive: true });
 window.addEventListener("scroll", updateJourney, { passive: true });
 window.addEventListener("wheel", handleWorkWheel, { passive: false });

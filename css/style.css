@@ -140,7 +140,7 @@ a { color: var(--blue); }
   position: absolute;
   inset: 0;
   z-index: var(--panel-order);
-  overflow-y: auto;
+  overflow: hidden;
   padding: clamp(1.25rem, 3.5vh, 2.5rem) 0;
   border-radius: 0;
   background: var(--surface);
@@ -972,4 +972,67 @@ a { color: var(--blue); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* =========================================================
+   One scrollbar: normal page layout on smaller screens
+   (the "no-journey" class is added by script.js)
+   ========================================================= */
+html.no-journey .journey-track { height: auto !important; }
+
+html.no-journey .journey-screen {
+  position: static;
+  height: auto;
+  overflow: visible;
+}
+
+html.no-journey .journey-panels {
+  position: static;
+  overflow: visible;
+}
+
+html.no-journey .journey-panel {
+  position: relative;
+  inset: auto;
+  transform: none;
+  overflow: visible;
+}
+
+html.no-journey .journey-panel.section { padding: clamp(3rem, 7vw, 5rem) 0; }
+
+html.no-journey .journey-panel.hero {
+  min-height: calc(100svh - 73px);
+  overflow: visible;
+}
+
+html.no-journey #work > .container,
+html.no-journey #services > .container,
+html.no-journey #process > .container,
+html.no-journey #contact > .container { min-height: auto; }
+
+/* Projects become a swipeable carousel */
+html.no-journey .work-viewport {
+  display: flex;
+  gap: 1rem;
+  height: auto;
+  min-height: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+html.no-journey .work-viewport::-webkit-scrollbar { display: none; }
+
+html.no-journey .work-slide {
+  position: relative;
+  inset: auto;
+  flex: 0 0 100%;
+  transform: none;
+  transition: none;
+  scroll-snap-align: center;
+}
+
+html.no-journey .work-slide img {
+  height: auto;
+  aspect-ratio: 16 / 9;
 }
