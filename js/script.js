@@ -395,11 +395,88 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
   });
 });
 
+/* ---------- Project slider: arrows, dots, autoplay (normal-page mode) ---------- */
+const workPrev = document.getElementById("workPrev");
+const workNext = document.getElementById("workNext");
+const workDots = document.getElementById("workDots");
+const workShowcase = document.querySelector(".work-showcase");
+const autoplayDelay = 4500; // milliseconds between slides
+let carouselIndex = 0;
+let autoplayTimer = null;
+let carouselPaused = false;
+
+workDots.innerHTML = workSlides
+  .map((_, i) => `<button type="button" class="work-dot" aria-label="Show project ${i + 1}"></button>`)
+  .join("");
+const dotButtons = [...workDots.querySelectorAll(".work-dot")];
+
+function updateDots() {
+  dotButtons.forEach((dot, i) => {
+    dot.classList.toggle("is-active", i === carouselIndex);
+    dot.setAttribute("aria-current", i === carouselIndex ? "true" : "false");
+  });
+}
+
+function showSlide(index) {
+  carouselIndex = (index + workSlides.length) % workSlides.length; // loops around
+  workViewport.scrollTo({
+    left: workSlides[carouselIndex].offsetLeft,
+    behavior: reduceMotion ? "auto" : "smooth",
+  });
+  updateDots();
+}
+
+function stopAutoplay() {
+  clearInterval(autoplayTimer);
+  autoplayTimer = null;
+}
+
+function startAutoplay() {
+  stopAutoplay();
+  if (journeyEnabled() || reduceMotion) return;
+  autoplayTimer = setInterval(() => {
+    if (!carouselPaused && !document.hidden) showSlide(carouselIndex + 1);
+  }, autoplayDelay);
+}
+
+workPrev.addEventListener("click", () => { showSlide(carouselIndex - 1); startAutoplay(); });
+workNext.addEventListener("click", () => { showSlide(carouselIndex + 1); startAutoplay(); });
+dotButtons.forEach((dot, i) => dot.addEventListener("click", () => { showSlide(i); startAutoplay(); }));
+
+// Keep the dots in sync when someone swipes on a phone
+let carouselScrollTimer;
+workViewport.addEventListener("scroll", () => {
+  if (journeyEnabled()) return;
+  clearTimeout(carouselScrollTimer);
+  carouselScrollTimer = setTimeout(() => {
+    const left = workViewport.scrollLeft;
+    let nearest = 0;
+    workSlides.forEach((slide, i) => {
+      if (Math.abs(slide.offsetLeft - left) < Math.abs(workSlides[nearest].offsetLeft - left)) nearest = i;
+    });
+    carouselIndex = nearest;
+    updateDots();
+  }, 120);
+}, { passive: true });
+
+// Pause while the visitor is looking at or touching the slider
+workShowcase.addEventListener("mouseenter", () => { carouselPaused = true; });
+workShowcase.addEventListener("mouseleave", () => { carouselPaused = false; });
+workShowcase.addEventListener("focusin", () => { carouselPaused = true; });
+workShowcase.addEventListener("focusout", () => { carouselPaused = false; });
+workShowcase.addEventListener("touchstart", () => { carouselPaused = true; }, { passive: true });
+workShowcase.addEventListener("touchend", () => {
+  setTimeout(() => { carouselPaused = false; }, 3000);
+}, { passive: true });
+
+updateDots();
+
 function applyJourneyMode() {
   const on = journeyEnabled();
   root.classList.toggle("no-journey", !on);
 
   if (on) {
+    stopAutoplay();                // big screens: scroll animation controls the slider
     sizeJourney();
   } else {
     // Clear the animation styles so sections sit in normal page order
@@ -413,6 +490,7 @@ function applyJourneyMode() {
       slide.style.removeProperty("--slide-x");
       slide.removeAttribute("aria-hidden");
     });
+    startAutoplay();               // smaller screens: slider moves on its own
   }
   sizeHeroScene();
 }
