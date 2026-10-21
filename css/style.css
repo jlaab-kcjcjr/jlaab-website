@@ -236,24 +236,51 @@ a { color: var(--blue); }
   font-size: 1.1rem;
 }
 
+/* ---------- Hero on tablets and phones ---------- */
 @media (max-width: 960px) {
-  .journey-panel.hero .hero-grid { grid-template-columns: minmax(0, 1fr); }
-  .journey-panel.hero .hero-copy { max-width: min(70%, 620px); }
-  .hero-scene {
-    right: 0;
-    width: min(48vw, 520px);
-    height: min(48vw, 520px);
+  .journey-panel.hero {
+    flex-direction: column;
+    justify-content: safe center;
+    align-items: stretch;
+    gap: 1rem;
+    overflow-y: auto;
   }
+
+  /* Cubes move above the text instead of covering it */
+  .hero-scene {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    flex-shrink: 0;
+    width: min(42vw, 300px);
+    height: min(42vw, 300px);
+    margin: 0 auto;
+  }
+
+  /* Let the page scroll normally when a finger touches the cubes */
+  .hero-scene iframe { pointer-events: none; }
+
+  .journey-panel.hero .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .journey-panel.hero .hero-copy { max-width: 100%; }
 }
 
 @media (max-width: 600px) {
-  .journey-panel.hero .hero-copy { max-width: 100%; }
-  .journey-panel.hero h1 { font-size: clamp(1.75rem, 8vw, 2.25rem); }
-
   .hero-scene {
-    width: min(76vw, 340px);
-    height: min(76vw, 340px);
+    width: min(50vw, 200px);
+    height: min(50vw, 200px);
   }
+
+  .journey-panel.hero h1 { font-size: clamp(1.9rem, 9vw, 2.4rem); }
+  .journey-panel.hero .hero-lead { font-size: 1.05rem; margin-top: 1rem; }
+  .journey-panel.hero .hero-actions { margin-top: 1.25rem; }
+  .journey-panel.hero .hero-actions .btn { padding: 0.8rem 1.25rem; font-size: 1rem; }
+  .journey-panel.hero .hero-note { font-size: 0.9rem; }
+}
+
+/* Very short screens (small phones, landscape): hide the cubes so the text fits */
+@media (max-width: 960px) and (max-height: 640px) {
+  .hero-scene { display: none; }
 }
 
 .section-head {
