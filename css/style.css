@@ -276,8 +276,8 @@ a { color: var(--blue); }
     right: auto;
     transform: none;
     flex-shrink: 0;
-    width: min(30vw, 220px);
-    height: min(30vw, 220px);
+    width: min(32vw, 240px);
+    height: min(32vw, 240px);
     margin: 0;
   }
 

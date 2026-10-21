@@ -317,7 +317,7 @@ const heroScene = document.querySelector(".hero-scene");
 
 function sizeHeroScene() {
   const sceneSize = Math.min(heroScene.clientWidth, heroScene.clientHeight);
-  const sceneZoom = window.matchMedia("(min-width: 961px)").matches ? 2.5 : 1;
+  const sceneZoom = window.matchMedia("(min-width: 961px)").matches ? 2.5 : 1.8;
   heroScene.style.setProperty("--scene-scale", String((sceneSize / 1200) * sceneZoom));
 }
 
