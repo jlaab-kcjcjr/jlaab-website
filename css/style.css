@@ -188,16 +188,29 @@ a { color: var(--blue); }
   isolation: isolate;
 }
 
+/* On large screens the row is "invisible", so the headline and cubes behave as before */
+.hero-title-row { display: contents; }
+
 .hero-scene {
   position: absolute;
   z-index: 0;
   top: 50%;
-  right: 100px;
+  /* Keeps the cubes 100px from the right edge of the screen */
+  right: calc((100% - 100vw) / 2 + 100px);
   display: grid;
   place-items: center;
   width: min(70svh, 700px);
   height: min(70svh, 700px);
   transform: translateY(-50%);
+}
+
+/* Keep the text above the cubes */
+.hero-title-row h1,
+.hero-lead,
+.hero-actions,
+.hero-note {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-scene iframe {
@@ -237,51 +250,49 @@ a { color: var(--blue); }
   font-size: 1.1rem;
 }
 
-/* ---------- Hero on tablets and phones ---------- */
+/* ---------- Hero on tablets and phones: cubes beside the headline ---------- */
 @media (max-width: 960px) {
-  .journey-panel.hero {
-    flex-direction: column;
-    justify-content: safe center;
-    align-items: stretch;
+  .journey-panel.hero { overflow-y: auto; }
+
+  .journey-panel.hero .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .journey-panel.hero .hero-copy { max-width: 100%; }
+
+  /* Headline on the left, cubes on the right, centered vertically */
+  .hero-title-row {
+    display: flex;
+    align-items: center;
     gap: 1rem;
-    overflow-y: auto;
   }
 
-  /* Cubes move above the text instead of covering it */
+  .journey-panel.hero .hero-title-row h1 {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: clamp(1.4rem, 6vw, 3rem);
+  }
+
   .hero-scene {
     position: relative;
     top: auto;
     right: auto;
     transform: none;
     flex-shrink: 0;
-    width: min(42vw, 300px);
-    height: min(42vw, 300px);
-    margin: 0 auto;
+    width: min(30vw, 220px);
+    height: min(30vw, 220px);
+    margin: 0;
   }
 
   /* Let the page scroll normally when a finger touches the cubes */
   .hero-scene iframe { pointer-events: none; }
-
-  .journey-panel.hero .hero-grid { grid-template-columns: minmax(0, 1fr); }
-  .journey-panel.hero .hero-copy { max-width: 100%; }
 }
 
 @media (max-width: 600px) {
-  .hero-scene {
-    width: min(50vw, 200px);
-    height: min(50vw, 200px);
-  }
+  .hero-title-row { gap: 0.75rem; }
+  .journey-panel.hero .hero-title-row h1 { font-size: clamp(1.35rem, 6vw, 1.9rem); }
 
-  .journey-panel.hero h1 { font-size: clamp(1.9rem, 9vw, 2.4rem); }
   .journey-panel.hero .hero-lead { font-size: 1.05rem; margin-top: 1rem; }
   .journey-panel.hero .hero-actions { margin-top: 1.25rem; }
   .journey-panel.hero .hero-actions .btn { padding: 0.8rem 1.25rem; font-size: 1rem; }
   .journey-panel.hero .hero-note { font-size: 0.9rem; }
-}
-
-/* Very short screens (small phones, landscape): hide the cubes so the text fits */
-@media (max-width: 960px) and (max-height: 640px) {
-  .hero-scene { display: none; }
 }
 
 .section-head {
