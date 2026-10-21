@@ -89,6 +89,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: clip;
 }
 
 img { max-width: 100%; display: block; }
@@ -1002,7 +1003,7 @@ html.no-journey .journey-panel.section { padding: clamp(3rem, 7vw, 5rem) 0; }
 
 html.no-journey .journey-panel.hero {
   min-height: calc(100svh - 73px);
-  overflow: visible;
+  overflow: hidden;
 }
 
 html.no-journey #work > .container,
